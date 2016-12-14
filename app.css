@@ -1,0 +1,149 @@
+body,
+html {
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+*,
+*:after {
+  box-sizing: border-box;;
+}
+
+#app {
+  --selection-width: 4rem;
+  --selection-height: 4rem;
+  display: flex;
+}
+
+.player-controls {
+  flex: 2;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+}
+
+.game-board {
+  flex: 6;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+[id*="selection-"] {
+  width: var(--selection-width);
+  height: var(--selection-height);
+  line-height: var(--selection-height);
+  border: 1px solid #aaa;
+  margin: 1rem;
+  cursor: pointer;
+  background: #fff;
+  text-align: center;
+}
+
+[id*="selection-"].disabled {
+  opacity: .2;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.score-board {
+  margin: 1rem;
+  text-align: center;
+}
+
+.score-label {
+  font-weight: 600;
+}
+
+#tic-tac-grid {
+  margin: 1rem 1rem 2rem;
+  position: relative;
+}
+
+#tic-tac-grid[class*="winner-"]:before {
+  content: ' ';
+  display: block;
+  width: 10rem;
+  height: .25rem;
+  background: red;
+  position: absolute;
+  transform-origin: 0;
+}
+
+#tic-tac-grid[class*="winner-0"]:before {
+  transform: translate3d(1rem,2rem,0);
+}
+
+#tic-tac-grid[class*="winner-1"]:before {
+  transform: translate3d(1rem,6rem,0);
+}
+
+#tic-tac-grid[class*="winner-2"]:before {
+  transform: translate3d(1rem,10.2rem,0);
+}
+
+#tic-tac-grid[class*="winner-3"]:before {
+  transform: rotate(90deg) translate3d(1rem,-2rem,0);
+}
+
+#tic-tac-grid[class*="winner-4"]:before {
+  transform: rotate(90deg) translate3d(1rem,-6.2rem,0);
+}
+
+#tic-tac-grid[class*="winner-5"]:before {
+  transform: rotate(90deg) translate3d(1rem,-10.4rem,0);
+}
+
+#tic-tac-grid[class*="winner-6"]:before {
+  width: 12rem;
+  transform: rotate(45deg) translate3d(3rem,0rem,0);
+}
+
+#tic-tac-grid[class*="winner-7"]:before {
+  width: 12rem;
+  transform: rotate(135deg) translate3d(-6rem,-8.6rem,0);
+}
+
+#tic-tac-grid:after {
+  content: ' ';
+  display: table;
+  clear: both;
+}
+
+#tic-tac-grid div {
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid #aaa;
+  background: #fff;
+  margin: 1px;
+  float: left;
+  text-align: center;
+  line-height: 4rem;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+#tic-tac-grid div.active {
+  background: #ccc;
+}
+
+#tic-tac-grid div:nth-child(3n+1) {
+  clear: both;
+}
+
+#new-round {
+  margin: 1rem;
+}
