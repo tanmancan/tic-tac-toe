@@ -49,12 +49,9 @@ class TicTacToe {
     this.playerList[nextPlayer].draggable = false;
 
     // Setup scoreboard
-    this.score = [this.playerScoreX, this.playerScoreY];
-    this.score = [0, 0]
+    this.score = [0, 0];
     this.scoreX = document.getElementById('score-x');
     this.scoreO = document.getElementById('score-o');
-
-    console.log(this);
   }
 
   switchPlayer() {
@@ -76,17 +73,17 @@ class TicTacToe {
 
   calculateGrid() {
     let grid = document.querySelectorAll('#tic-tac-grid > div'),
-        playerOneSum = '',
-        playerTwoSum = '';
+      playerOneSum = '',
+      playerTwoSum = '';
 
     // Create an index of grid items that have been marked by players
     Object.keys(grid).forEach(function(key) {
       let playerSelection = grid[key].getAttribute('data-player');
 
-      if(playerSelection === '0') {
+      if (playerSelection === '0') {
         playerOneSum += key;
       }
-      if(playerSelection === '1') {
+      if (playerSelection === '1') {
         playerTwoSum += key;
       }
     });
@@ -110,7 +107,7 @@ class TicTacToe {
     ];
 
     // Get the winner
-    if(checkWinner.indexOf(true) > -1) {
+    if (checkWinner.indexOf(true) > -1) {
       this.titTacGrid.classList.add('winner-' + checkWinner.indexOf(true));
       this.score[player] += 1;
 
@@ -160,36 +157,25 @@ class TicTacToe {
   handleEvent(e) {
     switch (e.type) {
       case 'click':
-        if(e.target === this.newRoundButton) {
+        if (e.target === this.newRoundButton) {
           this.newRound();
         }
-
-        break;
-      case 'drag':
         break;
       case 'dragstart':
-        let edt = e.dataTransfer;
-        let data = {
-          text: e.target.innerHTML,
-          player: this.currentPlayer
-        }
+        let edt = e.dataTransfer,
+          data = {
+            text: e.target.innerHTML,
+            player: this.currentPlayer
+          };
         edt.setData('application/javascript', JSON.stringify(data));
         e.dataTransfer.effectAllowed = 'move';
-
-        break;
-      case 'dragend':
-        break;
-      case 'dragenter':
-        break;
-      case 'dragexit':
         break;
       case 'drop':
         // Mark tic tac grid with selection
-        if(!e.target.classList.contains('selected')) {
+        if (!e.target.classList.contains('selected')) {
           let data = JSON.parse(e.dataTransfer.getData('application/javascript'));
 
           e.target.innerHTML = data.text;
-
           e.target.classList.remove('active');
           e.target.classList.add('selected');
           e.target.setAttribute('data-player', data.player);
@@ -198,20 +184,15 @@ class TicTacToe {
 
           this.switchPlayer();
         }
-
         break;
       case 'dragover':
-
-        if(!e.target.classList.contains('selected')) {
+        if (!e.target.classList.contains('selected')) {
           e.target.classList.add('active');
           e.preventDefault();
         }
-
         break;
       case 'dragleave':
-
         e.target.classList.remove('active');
-
         break;
     }
   }
