@@ -20,7 +20,6 @@ class TicTacToe {
     // Set drag events
     this.selectionX.addEventListener('drag', this, false);
     this.selectionX.addEventListener('dragstart', this, false);
-    // Set drag events
     this.selectionO.addEventListener('drag', this, false);
     this.selectionO.addEventListener('dragstart', this, false);
 
@@ -38,10 +37,11 @@ class TicTacToe {
       this.titTacGrid.appendChild(this['grid-' + i]);
     }
 
-    // Setup players
+    // Setup players - randomize who goes first
     this.playerList = [this.selectionX, this.selectionO];
     this.currentPlayer = Math.floor(Math.random() * 2);
 
+    // Get next player
     let nextPlayer = (this.currentPlayer !== 0) ? 0 : 1;
 
     // Disable selection for next player
@@ -54,6 +54,7 @@ class TicTacToe {
     this.scoreO = document.getElementById('score-o');
   }
 
+  // Switch players every turn
   switchPlayer() {
     // Get next player
     let nextPlayer = (this.currentPlayer !== 0) ? 0 : 1;
@@ -71,6 +72,7 @@ class TicTacToe {
     this.calculateGrid();
   }
 
+  // Check the grid for player selection
   calculateGrid() {
     let grid = document.querySelectorAll('#tic-tac-grid > div'),
       playerOneSum = '',
@@ -93,6 +95,7 @@ class TicTacToe {
     this.checkTicTacToe(playerTwoSum, 1);
   }
 
+  // Check to see if player has tic tac toe
   checkTicTacToe(playerSum, player) {
     // Possible winning combinations
     let checkWinner = [
@@ -114,11 +117,16 @@ class TicTacToe {
       this.endRound();
     }
 
-    this.scoreX.innerHTML = this.score[0];
-    this.scoreO.innerHTML = this.score[1];
-
+    this.updateScoreBoard();
   }
 
+  // Update score board
+  updateScoreBoard() {
+    this.scoreX.innerHTML = this.score[0];
+    this.scoreO.innerHTML = this.score[1];
+  }
+
+  // End the current round
   endRound() {
     // Disable selection
     this.playerList[0].classList.add('disabled');
@@ -127,6 +135,7 @@ class TicTacToe {
     this.playerList[1].draggable = false;
   }
 
+  // Start a new round
   newRound() {
     // Set random player for next round
     this.currentPlayer = Math.floor(Math.random() * 2);
@@ -154,47 +163,68 @@ class TicTacToe {
     });
   }
 
+  // Event handlers
   handleEvent(e) {
     switch (e.type) {
       case 'click':
-        if (e.target === this.newRoundButton) {
-          this.newRound();
-        }
+        this.onClick(e);
         break;
       case 'dragstart':
-        let edt = e.dataTransfer,
-          data = {
-            text: e.target.innerHTML,
-            player: this.currentPlayer
-          };
-        edt.setData('application/javascript', JSON.stringify(data));
-        e.dataTransfer.effectAllowed = 'move';
+        this.onDragStart(e);
         break;
       case 'drop':
-        // Mark tic tac grid with selection
-        if (!e.target.classList.contains('selected')) {
-          let data = JSON.parse(e.dataTransfer.getData('application/javascript'));
-
-          e.target.innerHTML = data.text;
-          e.target.classList.remove('active');
-          e.target.classList.add('selected');
-          e.target.setAttribute('data-player', data.player);
-
-          e.preventDefault();
-
-          this.switchPlayer();
-        }
+        this.onDrop(e);
         break;
       case 'dragover':
-        if (!e.target.classList.contains('selected')) {
-          e.target.classList.add('active');
-          e.preventDefault();
-        }
+        this.onDragOver(e);
         break;
       case 'dragleave':
-        e.target.classList.remove('active');
+        this.onDragLeave(e);
         break;
     }
+  }
+
+  onClick(e) {
+    if (e.target === this.newRoundButton) {
+      this.newRound();
+    }
+  }
+
+  onDragStart(e) {
+    let edt = e.dataTransfer,
+      data = {
+        text: e.target.innerHTML,
+        player: this.currentPlayer
+      };
+    edt.setData('application/javascript', JSON.stringify(data));
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  onDrop(e) {
+    // Mark tic tac grid with selection
+    if (!e.target.classList.contains('selected')) {
+      let data = JSON.parse(e.dataTransfer.getData('application/javascript'));
+
+      e.target.innerHTML = data.text;
+      e.target.classList.remove('active');
+      e.target.classList.add('selected');
+      e.target.setAttribute('data-player', data.player);
+
+      e.preventDefault();
+
+      this.switchPlayer();
+    }
+  }
+
+  onDragOver(e) {
+    if (!e.target.classList.contains('selected')) {
+      e.target.classList.add('active');
+      e.preventDefault();
+    }
+  }
+
+  onDragLeave(e) {
+    e.target.classList.remove('active');
   }
 }
 
