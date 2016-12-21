@@ -9,6 +9,7 @@ class TicTacToe {
     this.selectionO = document.getElementById('selection-o');
     this.titTacGrid = document.getElementById('tic-tac-grid');
     this.newRoundButton = document.getElementById('new-round');
+    this.message = document.getElementById('message');
 
     // Reset board button
     this.newRoundButton.addEventListener('click', this, false);
@@ -76,7 +77,8 @@ class TicTacToe {
   calculateGrid() {
     let grid = document.querySelectorAll('#tic-tac-grid > div'),
       playerOneSum = '',
-      playerTwoSum = '';
+      playerTwoSum = '',
+      totalSum = '';
 
     // Create an index of grid items that have been marked by players
     Object.keys(grid).forEach(function(key) {
@@ -90,13 +92,16 @@ class TicTacToe {
       }
     });
 
+    // To check for ties
+    totalSum = playerOneSum + playerTwoSum;
+
     // Check to see if each player have gotten tic tac toe
-    this.checkTicTacToe(playerOneSum, 0);
-    this.checkTicTacToe(playerTwoSum, 1);
+    this.checkTicTacToe(playerOneSum, 0, totalSum);
+    this.checkTicTacToe(playerTwoSum, 1, totalSum);
   }
 
   // Check to see if player has tic tac toe
-  checkTicTacToe(playerSum, player) {
+  checkTicTacToe(playerSum, player, totalSum) {
     // Possible winning combinations
     let checkWinner = [
       (playerSum.indexOf('012') > -1),
@@ -109,10 +114,21 @@ class TicTacToe {
       (playerSum.indexOf(2) > -1 && playerSum.indexOf(4) > -1 && playerSum.indexOf(6) > -1),
     ];
 
+    // Check for tie
+    if (totalSum.length === 9 && checkWinner.indexOf(true) < 0) {
+      this.message.innerHTML = `Tie!`;
+      this.endRound();
+    }
+
     // Get the winner
     if (checkWinner.indexOf(true) > -1) {
+      let playerName = ['X', 'O'];
+
       this.titTacGrid.classList.add('winner-' + checkWinner.indexOf(true));
       this.score[player] += 1;
+
+      // Notify who one
+      this.message.innerHTML = `Player ${playerName[player]} has one!`;
 
       this.endRound();
     }
@@ -161,6 +177,8 @@ class TicTacToe {
       gridItem.innerHTML = '';
       gridItem.classList.remove('selected');
     });
+
+    this.message.innerHTML = '';
   }
 
   // Event handlers
