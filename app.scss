@@ -4,17 +4,21 @@ html {
 }
 
 body {
-  font-family: sans-serif;
+  color: #000;
 }
 
 *,
 *:after {
+  font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;;
 }
 
 // User selection pane
-$selection-width: 4rem;
-$selection-height: 4rem;
+$selection-width: 8rem;
+$selection-height: 8rem;
+
+// Player control colors
+$player-control-background: #c2fbff;
 
 // Tic tac grid size
 $tic-tac-grid-width: 10rem;
@@ -22,10 +26,10 @@ $tic-tac-grid-height: 10rem;
 
 // Tic tac grid colors
 $tic-tac-grid-background: #fff;
-$tic-tac-grid-background-active: #ccc;
+$tic-tac-grid-background-active: $player-control-background;
 
 // Gameboard colors
-$game-board-background: #fafafa;
+$game-board-background: #fff;
 
 // Styles for individual grid blocks
 @mixin tic-tac-grid {
@@ -33,14 +37,15 @@ $game-board-background: #fafafa;
     user-select: none;
     width: $tic-tac-grid-width;
     height: $tic-tac-grid-height;
-    border: 1px solid #aaa;
     background: $tic-tac-grid-background;
-    margin: .25rem;
+    margin: 0;
     float: left;
     text-align: center;
+    font-weight: 900;
     font-size: $tic-tac-grid-height * .65;
     line-height: $tic-tac-grid-height;
     cursor: default;
+    margin: 0 1rem 1rem 0;
     &.active {
       background: $tic-tac-grid-background-active;
     }
@@ -55,11 +60,12 @@ $game-board-background: #fafafa;
     width: $selection-width;
     height: $selection-height;
     line-height: $selection-height;
-    border: 1px solid #aaa;
+    font-weight: 900;
+    font-size: $selection-height;
     margin: 1rem;
     cursor: pointer;
-    background: #fff;
     text-align: center;
+    background: transparent;
 
     &.disabled {
       user-select: none;
@@ -76,13 +82,16 @@ $game-board-background: #fafafa;
   @each $key, $combo in $winner-combo {
     &[class*="winner-#{$key}"] {
       >div:nth-child(#{nth($combo, 1)}) {
-        background: red;
+        background: #000;
+        color: #fff;
       }
       >div:nth-child(#{nth($combo, 2)}) {
-        background: red;
+        background: #000;
+        color: #fff;
       }
       >div:nth-child(#{nth($combo, 3)}) {
-        background: red;
+        background: #000;
+        color: #fff;
       }
     }
   }
@@ -100,7 +109,7 @@ $game-board-background: #fafafa;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  background: #eee;
+  background: $player-control-background;
 }
 
 .game-board {
@@ -113,17 +122,29 @@ $game-board-background: #fafafa;
 }
 
 .score-board {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
   margin: 1rem;
   text-align: center;
 
+  .score-container {
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: 900;
+  }
+
   .score-label {
-    font-weight: 600;
+
   }
 }
 
 #tic-tac-grid {
   @include tic-tac-grid;
   @include winner-highlight;
+  background: black;
+  padding: 1rem 0 0 1rem;
   margin: 1rem 1rem 2rem;
   position: relative;
 
@@ -136,9 +157,31 @@ $game-board-background: #fafafa;
 
 #new-round {
   margin: 1rem;
+  padding: .5rem 0;
+  border: none;
+  background: transparent;
+  text-transform: lowercase;
+  font-weight: 400;
+  font-size: 1.2rem;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    outline: none;
+    border: solid black;
+    padding-bottom: .25rem;
+    border-width: 0 0 .25rem 0;
+  }
+  &:active {
+    border-bottom-color: rgba(black, .5);
+  }
 }
 
 #message {
+  padding: 1rem;
   margin: 0 0 1rem;
+  font-weight: 600;
+  font-size: 2rem;
 }
 
