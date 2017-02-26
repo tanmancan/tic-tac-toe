@@ -1,0 +1,144 @@
+body,
+html {
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+*,
+*:after {
+  box-sizing: border-box;;
+}
+
+// User selection pane
+$selection-width: 4rem;
+$selection-height: 4rem;
+
+// Tic tac grid size
+$tic-tac-grid-width: 10rem;
+$tic-tac-grid-height: 10rem;
+
+// Tic tac grid colors
+$tic-tac-grid-background: #fff;
+$tic-tac-grid-background-active: #ccc;
+
+// Gameboard colors
+$game-board-background: #fafafa;
+
+// Styles for individual grid blocks
+@mixin tic-tac-grid {
+  div {
+    user-select: none;
+    width: $tic-tac-grid-width;
+    height: $tic-tac-grid-height;
+    border: 1px solid #aaa;
+    background: $tic-tac-grid-background;
+    margin: .25rem;
+    float: left;
+    text-align: center;
+    font-size: $tic-tac-grid-height * .65;
+    line-height: $tic-tac-grid-height;
+    cursor: default;
+    &.active {
+      background: $tic-tac-grid-background-active;
+    }
+    &:nth-child(3n+1) {
+      clear: both;
+    }
+  }
+}
+
+@mixin user-selection {
+  [id*="selection-"] {
+    width: $selection-width;
+    height: $selection-height;
+    line-height: $selection-height;
+    border: 1px solid #aaa;
+    margin: 1rem;
+    cursor: pointer;
+    background: #fff;
+    text-align: center;
+
+    &.disabled {
+      user-select: none;
+      opacity: .2;
+      cursor: default;
+    }
+  }
+}
+
+@mixin winner-highlight {
+  // Winning combinations
+  $winner-combo: ('0': (1,2,3), '1': (4,5,6), '2': (7,8,9), '3': (1,4,7), '4': (2,5,8), '5': (3,6,9), '6': (1,5,9), '7': (3,5,7));
+
+  @each $key, $combo in $winner-combo {
+    &[class*="winner-#{$key}"] {
+      >div:nth-child(#{nth($combo, 1)}) {
+        background: red;
+      }
+      >div:nth-child(#{nth($combo, 2)}) {
+        background: red;
+      }
+      >div:nth-child(#{nth($combo, 3)}) {
+        background: red;
+      }
+    }
+  }
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+.player-controls {
+  @include user-selection;
+  flex: 2;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+}
+
+.game-board {
+  flex: 6;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background: $game-board-background;
+}
+
+.score-board {
+  margin: 1rem;
+  text-align: center;
+
+  .score-label {
+    font-weight: 600;
+  }
+}
+
+#tic-tac-grid {
+  @include tic-tac-grid;
+  @include winner-highlight;
+  margin: 1rem 1rem 2rem;
+  position: relative;
+
+  &:after {
+    content: ' ';
+    display: table;
+    clear: both;
+  }
+}
+
+#new-round {
+  margin: 1rem;
+}
+
+#message {
+  margin: 0 0 1rem;
+}
+
