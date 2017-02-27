@@ -22,3 +22,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 **ES6 Declarations**
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements
+
+**Arrow Functions**
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+**Destructuring assignment**
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
