@@ -78,10 +78,11 @@ class TicTacToe {
     let grid = document.querySelectorAll('#tic-tac-grid > div'),
       playerOneSum = '',
       playerTwoSum = '',
+      playerSum = {},
       totalSum = '';
 
     // Create an index of grid items that have been marked by players
-    Object.keys(grid).forEach(function(key) {
+    Object.keys(grid).forEach( key => {
       let playerSelection = grid[key].getAttribute('data-player');
 
       if (playerSelection === '0') {
@@ -95,40 +96,53 @@ class TicTacToe {
     // To check for ties
     totalSum = playerOneSum + playerTwoSum;
 
-    // Check to see if each player have gotten tic tac toe
-    this.checkTicTacToe(playerOneSum, 0, totalSum);
-    this.checkTicTacToe(playerTwoSum, 1, totalSum);
+    playerSum = {
+      0: playerOneSum,
+      1: playerTwoSum
+    };
+
+    this.checkTicTacToe(playerSum, totalSum);
   }
 
   // Check to see if player has tic tac toe
-  checkTicTacToe(playerSum, player, totalSum) {
-    // Possible winning combinations
-    let checkWinner = [
-      (playerSum.indexOf('012') > -1),
-      (playerSum.indexOf('345') > -1),
-      (playerSum.indexOf('678') > -1),
-      (playerSum.indexOf(0) > -1 && playerSum.indexOf(3) > -1 && playerSum.indexOf(6) > -1),
-      (playerSum.indexOf(1) > -1 && playerSum.indexOf(4) > -1 && playerSum.indexOf(7) > -1),
-      (playerSum.indexOf(2) > -1 && playerSum.indexOf(5) > -1 && playerSum.indexOf(8) > -1),
-      (playerSum.indexOf(0) > -1 && playerSum.indexOf(4) > -1 && playerSum.indexOf(8) > -1),
-      (playerSum.indexOf(2) > -1 && playerSum.indexOf(4) > -1 && playerSum.indexOf(6) > -1),
-    ];
+  checkTicTacToe(playerSum, totalSum) {
+    let players = [{checkWinner: -1}, {checkWinner: -1}];
 
-    // Check for tie
-    if (totalSum.length === 9 && checkWinner.indexOf(true) < 0) {
-      this.message.innerHTML = `Tie!`;
+    // Possible winning combinations
+    Object.keys(playerSum).forEach( key => {
+      players[key].checkWinner = [
+        (playerSum[key].indexOf('012') > -1),
+        (playerSum[key].indexOf('345') > -1),
+        (playerSum[key].indexOf('678') > -1),
+        (playerSum[key].indexOf(0) > -1 && playerSum[key].indexOf(3) > -1 && playerSum[key].indexOf(6) > -1),
+        (playerSum[key].indexOf(1) > -1 && playerSum[key].indexOf(4) > -1 && playerSum[key].indexOf(7) > -1),
+        (playerSum[key].indexOf(2) > -1 && playerSum[key].indexOf(5) > -1 && playerSum[key].indexOf(8) > -1),
+        (playerSum[key].indexOf(0) > -1 && playerSum[key].indexOf(4) > -1 && playerSum[key].indexOf(8) > -1),
+        (playerSum[key].indexOf(2) > -1 && playerSum[key].indexOf(4) > -1 && playerSum[key].indexOf(6) > -1),
+      ];
+    });
+
+    // Test each player selection for tic tac toe
+    let checkPlayerWinner = players.map(player => player.checkWinner.indexOf(true) > -1);
+
+    // See if a player one
+    if (checkPlayerWinner.indexOf(true) > -1) {
+      let playerName = ['X', 'O'],
+          playerIdx = checkPlayerWinner.indexOf(true),
+          winner = players[playerIdx];
+
+      this.titTacGrid.classList.add('winner-' + winner.checkWinner.indexOf(true));
+      this.score[playerIdx] += 1;
+
+      // Notify who won
+      this.message.innerHTML = `Player ${playerName[playerIdx]} has won!`;
+
       this.endRound();
     }
 
-    // Get the winner
-    if (checkWinner.indexOf(true) > -1) {
-      let playerName = ['X', 'O'];
-
-      this.titTacGrid.classList.add('winner-' + checkWinner.indexOf(true));
-      this.score[player] += 1;
-
-      // Notify who won
-      this.message.innerHTML = `Player ${playerName[player]} has won!`;
+    // Check for tie
+    if (totalSum.length === 9 && checkPlayerWinner.indexOf(true) < 0) {
+      this.message.innerHTML = `Tie!`;
 
       this.endRound();
     }
@@ -138,17 +152,16 @@ class TicTacToe {
 
   // Update score board
   updateScoreBoard() {
-    this.scoreX.innerHTML = this.score[0];
-    this.scoreO.innerHTML = this.score[1];
+    [this.scoreX.innerHTML, this.scoreO.innerHTML] = this.score;
   }
 
   // End the current round
   endRound() {
     // Disable selection
-    this.playerList[0].classList.add('disabled');
-    this.playerList[0].draggable = false;
-    this.playerList[1].classList.add('disabled');
-    this.playerList[1].draggable = false;
+    this.playerList.forEach((val, idx) => {
+      this.playerList[idx].classList.add('disabled');
+      this.playerList[idx].draggable = false;
+    });
   }
 
   // Start a new round
@@ -170,7 +183,7 @@ class TicTacToe {
     this.titTacGrid.className = '';
     let grid = document.querySelectorAll('#tic-tac-grid > div');
 
-    Object.keys(grid).forEach(function(key) {
+    Object.keys(grid).forEach(key => {
       let gridItem = grid[key];
 
       gridItem.setAttribute('data-player', '');
