@@ -10,6 +10,7 @@ body {
 
 *,
 *:after {
+  user-select: none;
   font-family: 'Montserrat', sans-serif;
   box-sizing: border-box; }
 
@@ -94,7 +95,6 @@ body {
   margin: 1rem 1rem 2rem;
   position: relative; }
   #tic-tac-grid div {
-    user-select: none;
     width: 10rem;
     height: 10rem;
     background: #fff;

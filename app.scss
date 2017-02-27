@@ -14,6 +14,7 @@ body {
 
 *,
 *:after {
+  user-select: none;
   font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;;
 }
@@ -39,7 +40,6 @@ $game-board-background: #fff;
 // Styles for individual grid blocks
 @mixin tic-tac-grid {
   div {
-    user-select: none;
     width: $tic-tac-grid-width;
     height: $tic-tac-grid-height;
     background: $tic-tac-grid-background;

@@ -221,6 +221,11 @@ class TicTacToe {
   onDrop(e) {
     // Mark tic tac grid with selection
     if (!e.target.classList.contains('selected')) {
+      if (!e.dataTransfer.getData('application/javascript')) {
+        e.target.classList.remove('active');
+        return;
+      }
+
       let data = JSON.parse(e.dataTransfer.getData('application/javascript'));
 
       e.target.innerHTML = data.text;
