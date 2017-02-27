@@ -107,14 +107,8 @@ $game-board-background: #fff;
 
   @each $key, $combo in $winner-combo {
     &[class*="winner-#{$key}"] {
-      >div:nth-child(#{nth($combo, 1)}) {
-        background: #000;
-        color: #fff;
-      }
-      >div:nth-child(#{nth($combo, 2)}) {
-        background: #000;
-        color: #fff;
-      }
+      >div:nth-child(#{nth($combo, 1)}),
+      >div:nth-child(#{nth($combo, 2)}),
       >div:nth-child(#{nth($combo, 3)}) {
         background: #000;
         color: #fff;
