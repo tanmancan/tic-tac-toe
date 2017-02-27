@@ -1,0 +1,24 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "A tic tac toe app.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanmancan/tic-tac-toe.git"
+  },
+  "author": "Tanveer Karim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tanmancan/tic-tac-toe/issues"
+  },
+  "homepage": "https://tictactoe.tkarimdesign.com",
+  "devDependencies": {
+    "babel-preset-env": "^1.1.10",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2"
+  }
+}
