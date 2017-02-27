@@ -5,6 +5,11 @@ html {
 
 body {
   color: #000;
+
+  hr {
+    border: solid black;
+    border-width: .25rem 0 0;
+  }
 }
 
 *,

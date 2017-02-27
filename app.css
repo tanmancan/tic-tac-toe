@@ -4,6 +4,9 @@ html {
 
 body {
   color: #000; }
+  body hr {
+    border: solid black;
+    border-width: .25rem 0 0; }
 
 *,
 *:after {
