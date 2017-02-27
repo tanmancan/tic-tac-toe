@@ -127,8 +127,8 @@ class TicTacToe {
       this.titTacGrid.classList.add('winner-' + checkWinner.indexOf(true));
       this.score[player] += 1;
 
-      // Notify who one
-      this.message.innerHTML = `Player ${playerName[player]} has one!`;
+      // Notify who won
+      this.message.innerHTML = `Player ${playerName[player]} has won!`;
 
       this.endRound();
     }

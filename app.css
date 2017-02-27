@@ -12,15 +12,29 @@ body {
 
 #app {
   display: flex;
-  height: 100vh; }
+  height: 100vh;
+  position: relative; }
 
-.player-controls {
-  flex: 2;
+.title {
+  flex: 2 1 8rem;
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  background: #c2fbff; }
+  align-self: flex-start;
+  font-weight: 900;
+  font-size: 6rem;
+  line-height: 5rem;
+  padding: 3rem;
+  text-transform: uppercase; }
+
+.player-controls {
+  flex: 2 1 14rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-end;
+  background: #ffc2c2; }
   .player-controls [id*="selection-"] {
     width: 8rem;
     height: 8rem;
@@ -37,24 +51,23 @@ body {
       cursor: default; }
 
 .game-board {
-  flex: 6;
+  flex: 6 1 40rem;
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   background: #fff; }
-
-.score-board {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem;
-  text-align: center; }
-  .score-board .score-container {
-    padding: 1rem;
-    font-size: 2rem;
-    font-weight: 900; }
+  .game-board .score-board {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    text-align: center; }
+    .game-board .score-board .score-container {
+      padding: 1rem;
+      font-size: 2rem;
+      font-weight: 900; }
 
 #tic-tac-grid {
   background: black;
@@ -75,7 +88,7 @@ body {
     cursor: default;
     margin: 0 1rem 1rem 0; }
     #tic-tac-grid div.active {
-      background: #c2fbff; }
+      background: #ffc2c2; }
     #tic-tac-grid div:nth-child(3n+1) {
       clear: both; }
   #tic-tac-grid[class*="winner-0"] > div:nth-child(1) {
@@ -156,7 +169,7 @@ body {
     clear: both; }
 
 #new-round {
-  margin: 1rem;
+  margin: 1rem 1rem 4rem;
   padding: .5rem 0;
   border: none;
   background: transparent;
