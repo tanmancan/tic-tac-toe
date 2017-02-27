@@ -124,18 +124,38 @@ $game-board-background: #fff;
   position: relative;
 }
 
-.title {
+.heading {
   flex: 2 1 8rem;
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  align-self: flex-start;
   font-weight: 900;
   font-size: 6rem;
   line-height: 5rem;
   padding: 3rem;
   text-transform: uppercase;
+  .title {
+    flex: 1 1 auto;
+  }
+  .cite {
+    flex: 0 1 auto;
+    font-size: .8rem;
+    line-height: 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    color: #aaa;
+    a {
+      color: rgba(black, .6);
+      text-decoration: none;
+      &:hover,
+      &:focus {
+        color: #000;
+      }
+    }
+  }
 }
 
 .player-controls {
