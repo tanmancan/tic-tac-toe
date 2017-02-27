@@ -155,6 +155,7 @@ $game-board-background: #fff;
   flex-flow: column;
   align-items: center;
   justify-content: flex-end;
+  min-width: 40rem;
   background: $game-board-background;
 }
 
